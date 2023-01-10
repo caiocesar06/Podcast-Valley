@@ -1,5 +1,5 @@
 <template>
-    <div v-if="currentEpisode == undefined" class="container" @click.left="updateCurrentEpisode()">
+    <div v-if="currentEpisode == undefined" class="container" @click="updateCurrentEpisode()">
         <div class="title">
             <h1>Últimos lançamentos</h1>
         </div>
