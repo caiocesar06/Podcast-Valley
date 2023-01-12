@@ -4,16 +4,16 @@
             <h1>Últimos lançamentos</h1>
         </div>
         <div class="cards">
-            <Card :episode="episodes[0]"/>
-            <Card :episode="episodes[1]" />
+            <Card :episode="episodes[0]" @play="play"/>
+            <Card :episode="episodes[1]" @play="play"/>
         </div>
         <div class="title">
             <h1>Todos os episódios</h1> <span> {{ episodes.length }} ao total</span>
         </div>
-        <List :episodes="episodes" />
+        <List :episodes="episodes" @play="play"/>
     </div>
     <div v-else class="container" >
-        <DescriptionView />
+        <DescriptionView @back="back()" @play="play"/>
     </div>
 </template>
 
@@ -31,6 +31,7 @@
         props: {
             episodes: Array,
         },
+        emits: ['play'],
         components: {
             Card,
             List,
@@ -39,6 +40,13 @@
         methods: {
             updateCurrentEpisode: function() {
                 this.currentEpisode = JSON.parse(localStorage.getItem('episode'));
+            },
+            back: function() {
+                this.currentEpisode = undefined;
+                localStorage.clear();
+            },
+            play: function(episode) {
+                this.$emit('play', episode);
             }
         }
     }

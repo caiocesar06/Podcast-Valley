@@ -5,11 +5,11 @@
 				<HeaderView />
 			</div>
 			<div class="home">
-				<HomeView :episodes="episodes" />
+				<HomeView :episodes="episodes" @play="setPlayerEpisode" />
 			</div>
 		</div>
-		<div class="player">
-			<PlayerView :episode="episodes[0]" />
+		<div class="player" v-if="playerEpisode">
+			<PlayerView :episodes="episodes" :episode="playerEpisode" />
 		</div>
 	</div>
 </template>
@@ -24,6 +24,7 @@ export default {
 	data() {
 		return {
 			episodes: Array,
+			playerEpisode: Object
 		}
 	},
 	created() {
@@ -44,27 +45,32 @@ export default {
 		HeaderView,
 		HomeView,
 		PlayerView
+	},
+	methods: {
+		setPlayerEpisode: function (episode) {
+			this.playerEpisode = Object.assign({}, episode);
+		},
 	}
 }
 </script>
 
 <style scoped>
-	.main {
-		width: 70%;
-		height: 100%;
-	}
+.main {
+	width: 70%;
+	height: 100%;
+}
 
-	.player {
-		width: 30%;
-		height: 100%;
-		position: fixed;
-		left: 70%;
-	}
+.player {
+	width: 30%;
+	height: 100%;
+	position: fixed;
+	left: 70%;
+}
 
-	.site {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		flex-direction: row;
-	}
+.site {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+}
 </style>

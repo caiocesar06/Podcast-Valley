@@ -1,9 +1,9 @@
 <template>
-    <div class="container" v-if="episode != undefined">
+    <div class="container">
         <div class="thumbnail">
-            <img class="back-button" src="@/assets/back-button.svg" @click.left="back()">
-            <img class="thumbnail-img" :src="episode?.thumbnail" alt="Thumbnail">
-            <img class="play-button" src="@/assets/play-button-invert.svg">
+            <img class="back-button" src="@/assets/back-button.svg" @click.left="$emit('back')">
+            <img class="thumbnail-img" :src="episode?.thumbnail" alt="Thumbnail" >
+            <img class="play-button" src="@/assets/play-button-invert.svg" @click.left="$emit('play', episode)">
         </div>
         <div class="title">
             <h1>{{ episode?.title }}</h1>
@@ -20,21 +20,14 @@
             <p>{{ getDescription(episode?.description) }}</p>
         </div>
     </div>
-    <div v-else>
-            <HomeView :episodes="episodes"/>
-        </div>
 </template>
 
 <script>
-    import HomeView from './HomeView.vue';
-
     import getDate from '@/utils/getDate';
     import getDuration from '@/utils/getDuration';
     export default {
         name: 'DescriptionView',
-        props: {
-            episodes: Array
-        },
+        emits: ['play', 'back'],
         data: function() {
             return {
                 episode: JSON.parse(localStorage.getItem('episode'))
@@ -45,13 +38,7 @@
             getDuration: getDuration,
             getDescription(description) {
                 return description.replace(/(<([^>]+)>)/gi, "");
-            },
-            back: function() {
-                localStorage.clear();
             }
-        },
-        components: {
-            HomeView
         }
     }
 </script>
