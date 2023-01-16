@@ -1,5 +1,5 @@
 <template>
-    <div v-if="haveEpisode" class="player" >
+    <div v-if="haveEpisode || false" class="player">
         <div class="top">
             <img src="@/assets/player/headphone.svg">
             <h1>Tocando agora</h1>
@@ -9,30 +9,7 @@
             <h1>{{ episode?.title }}</h1>
             <span>{{ episode?.members }}</span>
         </div>
-        <div class="media-duration">
-            <span></span>
-            <div class="audio-progress-bar">
-                <div class="audio-progress-bar-fill"></div>
-            </div>
-            <span>{{ getDuration(episode?.file?.duration) }}</span>
-        </div>
-        <div class="buttons">
-            <button class="btn-shuffle">
-                <img src="@/assets/player/shuffle.svg" alt="">
-            </button>
-            <button class="btn-previous">
-                <img src="@/assets/player/play-arrow-previous.svg" alt="">
-            </button>
-            <button class="btn-play">
-                <img src="@/assets/player/union.svg" alt="" id="test">
-            </button>
-            <button class="btn-next">
-                <img src="@/assets/player/play-arrow-next.svg" alt="">
-            </button>
-            <button class="btn-repeat">
-                <img src="@/assets/player/repeat-rotate.svg" alt="">
-            </button>
-        </div>
+        <audio :src="this.episode?.file?.url" controls></audio>
     </div>
     <div v-else class="player disable">
         <div class="top disable">
@@ -48,30 +25,12 @@
 
 
 <script>
-import getDuration from '@/utils/getDuration';
-import MediaPlayer from '@/utils/MediaPlayer.js';
 export default {
     name: 'PlayerView',
-    data: function () {
-        return {
-            haveEpisode: this.episode ? true : false,
-            player: new MediaPlayer()
-        }
-    },
     props: {
         episodes: Array,
-        episode: Object
-    },
-    mounted() {
-        if(this.episode) {
-            this.player.init(this.episodes, {
-                id: this.episode?.id,
-                url: this.episode?.file?.url
-            });
-        }
-    },
-    methods: {
-        getDuration: getDuration
+        episode: Object,
+        haveEpisode: Boolean
     }
 }
 </script>
@@ -162,31 +121,12 @@ export default {
     color: #DCCDFF;
 }
 
-.media-duration {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-}
-
-.media-duration span {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.2rem;
-    text-align: center;
-    color: #DCCDFF;
+audio {
+    width: 90%;
+    margin-bottom: 2rem;
 }
 
 .disable {
-    opacity: 0.5;
-}
-
-.disable img {
-    width: 100%;
+    opacity: 0.8;
 }
 </style>

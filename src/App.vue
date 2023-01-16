@@ -9,7 +9,7 @@
 			</div>
 		</div>
 		<div class="player" v-if="playerEpisode">
-			<PlayerView :episodes="episodes" :episode="playerEpisode" />
+			<PlayerView :episodes="episodes" :episode="playerEpisode" :haveEpisode="haveEpisode"/>
 		</div>
 	</div>
 </template>
@@ -24,7 +24,8 @@ export default {
 	data() {
 		return {
 			episodes: Array,
-			playerEpisode: Object
+			playerEpisode: Object,
+			haveEpisode: false
 		}
 	},
 	created() {
@@ -49,6 +50,7 @@ export default {
 	methods: {
 		setPlayerEpisode: function (episode) {
 			this.playerEpisode = Object.assign({}, episode);
+			this.haveEpisode = true;
 		},
 	}
 }
