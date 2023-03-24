@@ -9,7 +9,7 @@
             <h1>{{ episode?.title }}</h1>
             <span>{{ episode?.members }}</span>
         </div>
-        <audio :src="this.episode?.file?.url" controls></audio>
+        <audio :src="this.episode?.file?.url" controls autoplay></audio>
     </div>
     <div v-else class="player disable">
         <div class="top disable">
